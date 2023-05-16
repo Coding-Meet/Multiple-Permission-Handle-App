@@ -2,6 +2,7 @@ package com.example.mulriplepermissionhandleapp
 
 import android.content.DialogInterface
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -12,10 +13,18 @@ import androidx.core.content.ContextCompat
 class MainActivity : AppCompatActivity() {
 
     private val multiplePermissionId = 14
-    private val multiplePermissionNameList = arrayListOf(
-        android.Manifest.permission.READ_CONTACTS,
-        android.Manifest.permission.CAMERA,
-    )
+    private val multiplePermissionNameList = if (Build.VERSION.SDK_INT >= 33) {
+        arrayListOf(
+            android.Manifest.permission.READ_MEDIA_AUDIO,
+            android.Manifest.permission.READ_MEDIA_VIDEO,
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        )
+    } else {
+        arrayListOf(
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
